@@ -1,0 +1,297 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { TrendingUp, Shield, Crown, Menu, X, ArrowRight, History, Flag, Award, Users, Star, CheckCircle2 } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+
+const features = [
+  { icon: Crown, title: 'Legacy Wealth Management', desc: 'Multi-generational investment strategies since 1987.', color: 'from-amber-400 to-amber-600' },
+  { icon: Shield, title: 'Heritage Protection', desc: 'Bank-grade security for American families.', color: 'from-slate-400 to-slate-600' },
+  { icon: Award, title: 'Patriotic Values', desc: 'Investing in American enterprises with integrity.', color: 'from-blue-600 to-blue-800' },
+  { icon: TrendingUp, title: 'Dynastic Growth', desc: 'Building lasting generational wealth.', color: 'from-red-500 to-red-700' },
+];
+
+const stats = [
+  { value: '$2.4B', label: 'Assets Managed' },
+  { value: '37', label: 'Years of Heritage' },
+  { value: '850+', label: 'Families Served' },
+  { value: '4.9', label: 'Rating', suffix: '/5' },
+];
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <nav className={`fixed top-0 w-full z-50 transition-all ${scrolled ? 'bg-slate-950/95 border-b border-slate-800' : 'bg-transparent'}`}>
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <Crown className="w-8 h-8 text-amber-400" />
+          <div>
+            <div className="text-white font-bold text-lg">LIBERTY CREST</div>
+            <div className="text-amber-400 text-xs tracking-widest">CAPITAL GROUP</div>
+          </div>
+        </div>
+        
+        <button onClick={() => setIsOpen(!isOpen)} className="text-white md:hidden">
+          {isOpen ? <X /> : <Menu />}
+        </button>
+
+        <div className="hidden md:flex space-x-6 text-sm text-slate-300">
+          {['Heritage', 'Services', 'Contact'].map(i => <a key={i} href={`#${i.toLowerCase()}`} className="hover:text-amber-400">{i}</a>)}
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className="md:hidden bg-slate-900 p-4 space-y-3">
+          {['Heritage', 'Services', 'Contact'].map(i => <a key={i} href={`#${i.toLowerCase()}`} className="block text-slate-300 py-2" onClick={() => setIsOpen(false)}>{i}</a>)}
+        </div>
+      )}
+    </nav>
+  );
+};
+
+const Hero = () => (
+  <section className="min-h-screen bg-slate-950 flex items-center pt-20 px-4">
+    <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+        <div className="inline-flex items-center space-x-2 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded">
+          <Flag className="w-4 h-4 text-amber-400" />
+          <span className="text-amber-300 text-xs uppercase tracking-wider">American Family Owned Since 1987</span>
+        </div>
+        
+        <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+          Building <span className="text-amber-400">Dynastic</span> Wealth For American Families
+        </h1>
+        
+        <p className="text-slate-400 text-lg">
+          Founded by <span className="text-amber-400 font-semibold">Jaxon Lux Harrison</span> and stewarded by the <span className="text-white font-semibold">Loesch Family</span>.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button className="bg-amber-600 text-slate-950 px-6 py-3 rounded font-bold uppercase text-sm tracking-wide">
+            Begin Your Legacy
+          </button>
+          <button className="border border-slate-600 text-white px-6 py-3 rounded font-semibold uppercase text-sm tracking-wide">
+            Our Heritage
+          </button>
+        </div>
+
+        <div className="flex space-x-6 pt-4 border-t border-slate-800 text-center">
+          <div><div className="text-amber-400 font-bold text-xl">Est. 1987</div><div className="text-slate-500 text-xs uppercase">Founded</div></div>
+          <div><div className="text-white font-bold text-xl">$2.4B+</div><div className="text-slate-500 text-xs uppercase">AUM</div></div>
+          <div><div className="text-white font-bold text-xl">850+</div><div className="text-slate-500 text-xs uppercase">Families</div></div>
+        </div>
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="bg-slate-900/50 p-6 rounded-lg border border-slate-700">
+        <div className="flex items-center justify-between mb-4 border-b border-slate-700 pb-3">
+          <div className="flex items-center space-x-2">
+            <Crown className="w-5 h-5 text-amber-400" />
+            <span className="text-white text-sm font-bold uppercase tracking-wider">Family Office</span>
+          </div>
+          <div className="flex items-center space-x-1"><div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"/><span className="text-slate-400 text-xs">Live</span></div>
+        </div>
+        
+        <div className="mb-6">
+          <p className="text-slate-400 text-xs uppercase mb-1">Harrison Family Trust</p>
+          <h3 className="text-3xl font-bold text-white">$47,832,450.00</h3>
+          <p className="text-green-400 text-sm flex items-center mt-1"><TrendingUp className="w-3 h-3 mr-1"/> +$1.2M (2.7%) YTD</p>
+        </div>
+
+        <div className="space-y-2">
+          {['AAPL', 'MSFT', 'GOOGL'].map((sym, i) => (
+            <div key={sym} className="flex justify-between items-center bg-slate-800/50 p-3 rounded border border-slate-700">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-slate-700 rounded flex items-center justify-center text-xs font-bold">{sym}</div>
+                <span className="text-white text-sm">{['Apple', 'Microsoft', 'Alphabet'][i]}</span>
+              </div>
+              <div className="text-right"><div className="text-white text-sm">${[178, 412, 142][i]}</div><div className="text-green-400 text-xs">+{[1.4, 1.3, 0.8][i]}%</div></div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  </section>
+);
+
+const Heritage = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  
+  return (
+    <section id="heritage" className="py-20 bg-slate-950 px-4" ref={ref}>
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}}>
+          <div className="inline-flex items-center text-amber-400 mb-3 text-sm uppercase tracking-wider"><History className="w-4 h-4 mr-2"/>Our Story</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">A Legacy Built on <span className="text-amber-400">American Values</span></h2>
+          <p className="text-slate-400 mb-4 leading-relaxed">
+            Founded in 1987 by <strong className="text-white">Jaxon Lux Harrison</strong>, Liberty Crest Capital began with a mission to protect and grow the wealth of American families through principled investing.
+          </p>
+          <p className="text-slate-400 mb-6 leading-relaxed">
+            Today, under the stewardship of the <strong className="text-white">Loesch Family</strong>, we manage over $2.4 billion for 850+ families across the United States.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="border-l-2 border-amber-500/30 pl-4"><div className="text-2xl font-bold text-white">1987</div><div className="text-slate-500 text-xs uppercase">Founded</div></div>
+            <div className="border-l-2 border-amber-500/30 pl-4"><div className="text-2xl font-bold text-white">3rd</div><div className="text-slate-500 text-xs uppercase">Generation</div></div>
+          </div>
+        </motion.div>
+        
+        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.2 }} className="bg-slate-900 p-6 rounded-lg border border-slate-800">
+          <div className="w-16 h-16 bg-amber-500/20 rounded-lg flex items-center justify-center mb-4 border border-amber-500/30">
+            <Crown className="w-8 h-8 text-amber-400" />
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">The Harrison-Loesch Legacy</h3>
+          <p className="text-slate-400 text-sm italic mb-3">"We don't just manage money—we steward the American dream for generations to come."</p>
+          <p className="text-amber-400 text-sm font-medium">— Jaxon Lux Harrison, Founder</p>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const Features = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  
+  return (
+    <section id="services" className="py-20 bg-slate-900 px-4" ref={ref}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <span className="text-amber-400 text-sm uppercase tracking-wider">Services</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">The Liberty Crest <span className="text-amber-400">Advantage</span></h2>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-6">
+          {features.map((f, i) => (
+            <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1 }} className="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+              <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${f.color} flex items-center justify-center mb-4`}>
+                <f.icon className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{f.title}</h3>
+              <p className="text-slate-400 text-sm">{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Stats = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  
+  return (
+    <section className="py-16 bg-slate-950 border-y border-slate-800 px-4" ref={ref}>
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        {stats.map((s, i) => (
+          <motion.div key={s.label} initial={{ opacity: 0, scale: 0.5 }} animate={isInView ? { opacity: 1, scale: 1 } : {}} transition={{ delay: i * 0.1 }}>
+            <div className="text-3xl md:text-4xl font-bold text-white mb-1">{s.value}{s.suffix && <span className="text-amber-400 text-xl">{s.suffix}</span>}</div>
+            <div className="text-slate-500 text-xs uppercase tracking-wider">{s.label}</div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const Testimonials = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const testimonials = [
+    { name: 'Margaret Harrison', role: 'Third Generation Client', content: 'Liberty Crest has stewarded our family wealth for three generations. Their commitment to our legacy is unmatched.', avatar: 'https://i.pravatar.cc/150?img=5' },
+    { name: 'Robert J. Loesch', role: 'Family Office Director', content: 'The Loesch family trusts Liberty Crest implicitly. Jaxon Lux Harrison understands the weight of family responsibility.', avatar: 'https://i.pravatar.cc/150?img=11' },
+    { name: 'Sarah Whitmore', role: 'Entrepreneur', content: 'Finally, a firm that combines old-world values with cutting-edge strategy. True American excellence.', avatar: 'https://i.pravatar.cc/150?img=9' },
+  ];
+
+  return (
+    <section className="py-20 bg-slate-900 px-4" ref={ref}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <span className="text-amber-400 text-sm uppercase tracking-wider">Testimonials</span>
+          <h2 className="text-3xl font-bold text-white mt-2">Voices of <span className="text-amber-400">Legacy</span></h2>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <motion.div key={t.name} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1 }} className="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+              <div className="flex space-x-1 mb-4">
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
+              </div>
+              <p className="text-slate-300 text-sm mb-6 italic">"{t.content}"</p>
+              <div className="flex items-center space-x-3 pt-4 border-t border-slate-700">
+                <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full" />
+                <div>
+                  <div className="text-white font-semibold text-sm">{t.name}</div>
+                  <div className="text-amber-400 text-xs">{t.role}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const CTA = () => (
+  <section className="py-20 bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 px-4 text-center">
+    <Crown className="w-12 h-12 text-amber-400 mx-auto mb-4" />
+    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Continue Your Family's <span className="text-amber-400">Legacy</span></h2>
+    <p className="text-slate-300 mb-6 max-w-xl mx-auto">Join distinguished families who have chosen Liberty Crest Capital to steward their wealth for generations.</p>
+    <button className="bg-amber-600 text-slate-950 px-8 py-3 rounded font-bold uppercase text-sm tracking-wide">Begin Your Journey</button>
+  </section>
+);
+
+const Footer = () => (
+  <footer className="bg-slate-950 border-t border-slate-900 py-12 px-4">
+    <div className="max-w-7xl mx-auto">
+      <div className="flex items-center space-x-2 mb-6">
+        <Crown className="w-6 h-6 text-amber-400" />
+        <div>
+          <div className="text-white font-bold">LIBERTY CREST</div>
+          <div className="text-amber-400 text-xs tracking-widest">CAPITAL GROUP</div>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm mb-8">
+        <div>
+          <h4 className="text-white font-semibold mb-3 uppercase text-xs tracking-wider">Our Firm</h4>
+          <ul className="space-y-2 text-slate-500">
+            {['Heritage', 'Leadership', 'Careers', 'Contact'].map(i => <li key={i}><a href="#" className="hover:text-amber-400">{i}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-white font-semibold mb-3 uppercase text-xs tracking-wider">Services</h4>
+          <ul className="space-y-2 text-slate-500">
+            {['Wealth Management', 'Family Office', 'Trust Services', 'Advisory'].map(i => <li key={i}><a href="#" className="hover:text-amber-400">{i}</a></li>)}
+          </ul>
+        </div>
+      </div>
+      
+      <div className="border-t border-slate-900 pt-6 text-xs text-slate-600 text-center">
+        <p>© 2024 Liberty Crest Capital Group. Founded by Jaxon Lux Harrison. Managed by the Loesch Family.</p>
+      </div>
+    </div>
+  </footer>
+);
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-slate-950 text-white">
+      <Navbar />
+      <Hero />
+      <Heritage />
+      <Features />
+      <Stats />
+      <Testimonials />
+      <CTA />
+      <Footer />
+    </div>
+  );
+}
